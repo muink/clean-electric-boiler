@@ -4,7 +4,7 @@ data:extend({
     type = "technology",
     name = "clean-electric-boiler",
     icon_size = 128,
-    icon = "__base__/graphics/technology/kovarex-enrichment-process.png",
+    icon = "__clean-electric-boiler__/graphics/technology/clean-electric-boiler.png",
     effects = {
       {
         type = "unlock-recipe",
@@ -26,7 +26,7 @@ data:extend({
     type = "technology",
     name = "clean-electric-boiler-2",
     icon_size = 128,
-    icon = "__base__/graphics/technology/kovarex-enrichment-process.png",
+    icon = "__clean-electric-boiler__/graphics/technology/clean-electric-boiler.png",
     effects = {
       {
         type = "unlock-recipe",

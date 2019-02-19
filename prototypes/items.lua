@@ -3,7 +3,10 @@ data:extend({
   {
     type = "item",
     name = "clean-electric-boiler-165",
-    icon = "__base__/graphics/icons/boiler.png",
+	icons = {
+		{icon = "__clean-electric-boiler__/graphics/icons/clean-electric-boiler.png"},
+		{icon = "__clean-electric-boiler__/graphics/icons/Ⅰ.png"}
+	},
     icon_size = 32,
     flags = {"goes-to-quickbar"},
     subgroup = "energy",
@@ -13,7 +16,10 @@ data:extend({
   },  {
     type = "item",
     name = "clean-electric-boiler-500",
-    icon = "__base__/graphics/icons/boiler.png",
+	icons = {
+		{icon = "__clean-electric-boiler__/graphics/icons/clean-electric-boiler.png"},
+		{icon = "__clean-electric-boiler__/graphics/icons/Ⅱ.png"}
+	},
     icon_size = 32,
     flags = {"goes-to-quickbar"},
     subgroup = "energy",
