@@ -1,41 +1,99 @@
 
---entities
-local entities={}
-entities[1] = table.deepcopy(data.raw["boiler"]["boiler"])
-entities[1].name = "clean-electric-boiler-165"
-entities[1].icon = "__clean-electric-boiler__/graphics/icons/clean-electric-boiler.png"
-entities[1].minable.result = "clean-electric-boiler-165"
-entities[1].target_temperature = 165
-entities[1].energy_consumption = "1.8MW"
-entities[1].energy_source = {
+local boiler_base = table.deepcopy(data.raw["boiler"]["boiler"])
+local entity_path = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/"
+
+boiler_base.icon = "__clean-electric-boiler__/graphics/icons/clean-electric-boiler.png"
+boiler_base.energy_source = {
 	type = "electric",
 	usage_priority = "secondary-input",
 	emissions = 0
 }
+for k, v in pairs ({north="N", east="E", south="S", west="W"}) do
+	boiler_base.structure[k].layers[1].filename = entity_path .. v .. "-idle.png"
+	boiler_base.structure[k].layers[1].hr_version.filename = entity_path .. "hr-" .. v .. "-idle.png"
+	boiler_base.fire_glow[k].filename = entity_path .. v .. "-light.png"
+	boiler_base.fire_glow[k].hr_version.filename = entity_path .. "hr-" .. v .. "-light.png"
+end
+boiler_base.fire = {
+	north = {
+		filename = entity_path .. "N-fire.png",
+		priority = "extra-high",
+		frame_count = 12,
+		line_length = 3,
+		width = 20,
+		height = 10,
+		animation_speed = 0.125,
+		shift = util.by_pixel(-1, 1),
+		hr_version = {
+			filename = entity_path .. "hr-N-fire.png",
+			priority = "extra-high",
+			frame_count = 12,
+			line_length = 3,
+			width = 40,
+			height = 20,
+			animation_speed = 0.125,
+			shift = util.by_pixel(-0.5, 0.5),
+			scale = 0.5
+		}
+	},
+	east = {
+		filename = entity_path .. "E-fire.png",
+		priority = "extra-high",
+		frame_count = 12,
+		line_length = 4,
+		width = 10,
+		height = 20,
+		animation_speed = 0.125,
+		shift = util.by_pixel(-15, -17),
+		hr_version = {
+			filename = entity_path .. "hr-E-fire.png",
+			priority = "extra-high",
+			frame_count = 12,
+			line_length = 4,
+			width = 20,
+			height = 40,
+			animation_speed = 0.125,
+			shift = util.by_pixel(-15, -17.5),
+			scale = 0.5
+		}
+	},
+	west = {
+		filename = entity_path .. "W-fire.png",
+		priority = "extra-high",
+		frame_count = 12,
+		line_length = 4,
+		width = 10,
+		height = 20,
+		animation_speed = 0.125,
+		shift = util.by_pixel(17, -17),
+		hr_version = {
+			filename = entity_path .. "hr-W-fire.png",
+			priority = "extra-high",
+			frame_count = 12,
+			line_length = 4,
+			width = 20,
+			height = 40,
+			animation_speed = 0.125,
+			shift = util.by_pixel(17, -17),
+			scale = 0.5
+		}
+	}
+}
 
-entities[1].structure.north.layers[1].filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/N-idle.png"
-entities[1].structure.east.layers[1].filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/E-idle.png"
-entities[1].structure.south.layers[1].filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/S-idle.png"
-entities[1].structure.west.layers[1].filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/W-idle.png"
-entities[1].structure.north.layers[1].hr_version.filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/hr-N-idle.png"
-entities[1].structure.east.layers[1].hr_version.filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/hr-E-idle.png"
-entities[1].structure.south.layers[1].hr_version.filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/hr-S-idle.png"
-entities[1].structure.west.layers[1].hr_version.filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/hr-W-idle.png"
-entities[1].fire_glow.north.filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/N-light.png"
-entities[1].fire_glow.east.filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/E-light.png"
-entities[1].fire_glow.south.filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/S-light.png"
-entities[1].fire_glow.west.filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/W-light.png"
-entities[1].fire_glow.north.hr_version.filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/hr-N-light.png"
-entities[1].fire_glow.east.hr_version.filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/hr-E-light.png"
-entities[1].fire_glow.south.hr_version.filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/hr-S-light.png"
-entities[1].fire_glow.west.hr_version.filename = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/hr-W-light.png"
+--entities
+local entities={}
+local generator={
+	c165 = data.raw["generator"]["steam-engine"].fluid_usage_per_tick,
+	c500 = data.raw["generator"]["steam-turbine"].fluid_usage_per_tick
+}
 
-entities[2] = table.deepcopy(entities[1])
-entities[2].name = "clean-electric-boiler-500"
-entities[2].icon = "__clean-electric-boiler__/graphics/icons/clean-electric-boiler.png"
-entities[2].minable.result = "clean-electric-boiler-500"
-entities[2].target_temperature = 500
-entities[2].energy_consumption = 5.82*2 .. "MW" --data.raw["generator"]["steam-turbine"].fluid_usage_per_tick*2*60s*(500-15)℃*0.2MJ
+for i, v in ipairs ({165, 500}) do
+	entities[i] = table.deepcopy(boiler_base)
+	entities[i].name = "clean-electric-boiler-" .. v
+	entities[i].minable.result = "clean-electric-boiler-" .. v
+	entities[i].target_temperature = v
+	entities[i].energy_consumption = (generator["c" .. v]*60 * (v-15) * 0.0002)*2 .. "MW"
+end
 
 
 data:extend(entities)
