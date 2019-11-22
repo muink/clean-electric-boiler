@@ -8,7 +8,6 @@ data:extend({
 		{icon = "__clean-electric-boiler__/graphics/icons/Ⅰ.png"}
 	},
     icon_size = 32,
-    flags = {"goes-to-quickbar"},
     subgroup = "energy",
     order = "e[electric-boiler]-a",
     place_result = "clean-electric-boiler-165",
@@ -21,7 +20,6 @@ data:extend({
 		{icon = "__clean-electric-boiler__/graphics/icons/Ⅱ.png"}
 	},
     icon_size = 32,
-    flags = {"goes-to-quickbar"},
     subgroup = "energy",
     order = "e[electric-boiler]-b",
     place_result = "clean-electric-boiler-500",
