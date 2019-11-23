@@ -3,6 +3,7 @@ local boiler_base = table.deepcopy(data.raw["boiler"]["boiler"])
 local entity_path = "__clean-electric-boiler__/graphics/entity/clean-electric-boiler/"
 
 boiler_base.icon = "__clean-electric-boiler__/graphics/icons/clean-electric-boiler.png"
+boiler_base.fast_replaceable_group = "electric-boiler"
 boiler_base.energy_source = {
 	type = "electric",
 	usage_priority = "secondary-input",
@@ -94,6 +95,7 @@ for i, v in ipairs ({165, 500}) do
 	entities[i].target_temperature = v
 	entities[i].energy_consumption = (generator["c" .. v]*60 * (v-15) * 0.0002)*2 .. "MW"
 end
+-- boiler.next_upgrade = "clean-electric-boiler" .. v
 
 
 data:extend(entities)
