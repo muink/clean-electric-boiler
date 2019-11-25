@@ -61,7 +61,7 @@ local function surface_del(event)
 		delete_boiler(id)
 	end
 	debug_log("The surface #" .. index .. ": \"" .. surface.name .. "\" is deleted")
-	debug_log("Remove " ..  #reactors .. " electric boilers of this surface from table")
+	debug_log("Remove " ..  #boilers .. " electric boilers of this surface from table")
 end
 
 
